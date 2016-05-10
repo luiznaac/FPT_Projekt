@@ -1,18 +1,16 @@
-package shop;
+package model;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 
 public class Product implements fpt.com.Product {
 
-	private LongProperty id = new SimpleLongProperty();
+	private long id;
 	private DoubleProperty price = new SimpleDoubleProperty();
 	private IntegerProperty quantity = new SimpleIntegerProperty();
 	private StringProperty name = new SimpleStringProperty();
@@ -24,7 +22,7 @@ public class Product implements fpt.com.Product {
 		setName(name);
 	}
 
-	Product(double price, int quantity, String name){
+	public Product(double price, int quantity, String name){
 		setPrice(price);
 		setQuantity(quantity);
 		setName(name);
@@ -32,12 +30,12 @@ public class Product implements fpt.com.Product {
 
 	@Override
 	public long getId() {
-		return id.get();
+		return id;
 	}
 
 	@Override
 	public void setId(long id) {
-		this.id.set(id);
+		this.id = id;
 	}
 
 	@Override

@@ -1,73 +1,54 @@
-package shop;
+package model;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 
 import fpt.com.Product;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 
-public class Order implements fpt.com.Order {
 
-	private ProductList list;
-	private IntegerProperty quantity = new SimpleIntegerProperty();
-	private DoubleProperty sum = new SimpleDoubleProperty();
-
-	public Order(){
-		list = new ProductList();
-		quantity.set(0);
-		sum.set(0);
-	}
-
-	@Override
-	public Iterator<Product> iterator() {
-		return list.iterator();
-	}
+public class Order extends ArrayList<fpt.com.Product> implements fpt.com.Order {
 
 	@Override
 	public boolean add(Product e) {
-		if(list.add(e)){
-			sum.add(e.getPrice());
-			quantity.add(1);
-			return true;
-		}
-		else return false;
+		return add(e);
 	}
 
 	@Override
 	public boolean delete(Product p) {
-		if(list.delete(p)){
-			sum.subtract(p.getPrice());
-			quantity.subtract(1);
-			return true;
-		}
-		else return false;
-	}
-
-	@Override
-	public int size() {
-		return list.size();
+		return remove(p);
 	}
 
 	@Override
 	public Product findProductById(long id) {
-		return list.findProductById(id);
+		for(Product temp : this)
+			if(temp.getId() == id) return temp;
+		return null;
 	}
 
 	@Override
 	public Product findProductByName(String name) {
-		return list.findProductByName(name);
+		for(Product temp : this)
+			if(temp.getName() == name) return temp;
+		return null;
 	}
 
 	@Override
 	public double getSum() {
-		return sum.get();
+		double sum = 0;
+		for(Product temp : this){
+			sum += temp.getPrice();
+		}
+		return sum;
 	}
 
 	@Override
 	public int getQuantity() {
-		return quantity.get();
+		int quantity = 0;
+		for(Product temp : this){
+			quantity += temp.getQuantity();
+		}
+		return quantity;
 	}
+
+
 
 }

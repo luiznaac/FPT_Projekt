@@ -1,9 +1,7 @@
-package shop;
+package view;
 
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -30,7 +28,7 @@ public class ViewShop extends BorderPane {
 
 		addButton.setId("add");
 		deleteButton.setId("delete");
-		
+
 		products.setCellFactory(c -> {
 			ListCell<fpt.com.Product> cell = new ListCell<fpt.com.Product>(){
 				@Override

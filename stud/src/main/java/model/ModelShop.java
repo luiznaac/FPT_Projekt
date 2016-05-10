@@ -1,24 +1,24 @@
-package shop;
+package model;
 
 import javafx.collections.ModifiableObservableListBase;
 
 public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 
-	private ProductList products = new ProductList();
+	ProductList list = new ProductList();
 
 	@Override
 	public Product get(int index) {
-		return (Product)products.findProductById(index);
+		return (Product) list.get(index);
 	}
 
 	@Override
 	public int size() {
-		return products.size();
+		return list.size();
 	}
 
 	@Override
 	protected void doAdd(int index, fpt.com.Product e) {
-		products.add(e);
+		list.add(index, e);
 	}
 
 	@Override
@@ -28,10 +28,7 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 
 	@Override
 	protected Product doRemove(int index) {
-		Product product = (Product)products.findProductById(index);
-		if(products.delete(product))
-			return product;
-		else return null;
+		return (Product) list.remove(index);
 	}
 
 }

@@ -1,35 +1,20 @@
-package shop;
+package model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import fpt.com.Product;
 
-public class ProductList extends ArrayList<Product> implements fpt.com.ProductList {
-
-	public ProductList(){
-		super();
-	}
-
-	@Override
-	public Iterator<Product> iterator() {
-		return super.iterator();
-	}
+public class ProductList extends ArrayList<fpt.com.Product> implements fpt.com.ProductList {
 
 	@Override
 	public boolean delete(Product product) {
-		return super.remove(product);
+		return remove(product.getId());
 	}
 
 	@Override
 	public boolean add(Product e){
 		e.setId(size());
 		return super.add(e);
-	}
-
-	@Override
-	public int size() {
-		return super.size();
 	}
 
 	@Override
