@@ -14,8 +14,14 @@ public class ControllerShop {
 		view.addEventHandler(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event) {
-				if(((Button)event.getSource()).getId() == "add")
-					model.add(new Product(Double.parseDouble(view.getInputPrice()), Integer.parseInt(view.getInputQuantity()), view.getInputName()));
+				if(((Button)event.getSource()).getId() == "add"){
+					try{
+						model.add(new Product(view.getInputPrice(), view.getInputQuantity(), view.getInputName()));
+					}
+					catch(RuntimeException re){
+						System.out.println(re);
+					}
+				}
 				else if(((Button)event.getSource()).getId() == "delete")
 					model.remove(view.getList().getSelectionModel().getSelectedItem());
 			}

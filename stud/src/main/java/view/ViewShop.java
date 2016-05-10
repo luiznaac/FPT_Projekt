@@ -57,12 +57,12 @@ public class ViewShop extends BorderPane {
 		return name.getText();
 	}
 
-	public String getInputPrice(){
-		return price.getText();
+	public double getInputPrice(){
+		return Double.parseDouble(price.getText());
 	}
 
-	public String getInputQuantity(){
-		return quantity.getText();
+	public int getInputQuantity(){
+		return Integer.parseInt(quantity.getText());
 	}
 
 }
