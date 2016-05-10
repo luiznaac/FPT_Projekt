@@ -12,12 +12,6 @@ public class ProductList extends ArrayList<fpt.com.Product> implements fpt.com.P
 	}
 
 	@Override
-	public boolean add(Product e){
-		e.setId(size());
-		return super.add(e);
-	}
-
-	@Override
 	public Product findProductById(long id) {
 		for(Product temp : this)
 			if(temp.getId() == id) return temp;
