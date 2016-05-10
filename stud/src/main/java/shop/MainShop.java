@@ -19,7 +19,7 @@ public class MainShop extends Application {
 
 		Scene scene = new Scene(view);
 		primaryStage.setScene(scene);
-		primaryStage.setTitle("Shop");
+		primaryStage.setTitle("Shop Test");
 		primaryStage.show();
 	}
 
