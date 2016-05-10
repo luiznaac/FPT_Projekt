@@ -58,7 +58,10 @@ public class ViewShop extends BorderPane {
 	}
 
 	public String getInputPrice(){
-		return price.getText();
+		String Inputprice = price.getText();
+
+		return Inputprice;
+
 	}
 
 	public String getInputQuantity(){
