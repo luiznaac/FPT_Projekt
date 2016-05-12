@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import fpt.com.Product;
 
-public class ProductList extends ArrayList<fpt.com.Product> implements fpt.com.ProductList {
+public class ProductList extends ArrayList<Product> implements fpt.com.ProductList {
 
 	@Override
 	public boolean delete(Product product) {

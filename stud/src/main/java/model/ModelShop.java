@@ -2,7 +2,7 @@ package model;
 
 import javafx.collections.ModifiableObservableListBase;
 
-public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
+public class ModelShop extends ModifiableObservableListBase<Product> {
 
 	ProductList list = new ProductList();
 
@@ -17,12 +17,12 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 	}
 
 	@Override
-	protected void doAdd(int index, fpt.com.Product e) {
+	protected void doAdd(int index, Product e) {
 		list.add(index, e);
 	}
 
 	@Override
-	protected fpt.com.Product doSet(int index, fpt.com.Product element) {
+	protected Product doSet(int index, Product element) {
 		return null;
 	}
 
