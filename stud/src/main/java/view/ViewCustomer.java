@@ -32,6 +32,8 @@ public class ViewCustomer extends BorderPane {
 		setBottom(buyButton);
 		BorderPane.setAlignment(buyButton, Pos.CENTER_RIGHT);
 		//set the other children
+		//the availableProducts uses the overridden toString Method in the Product Class
+		//to print the information about the object in the list
 		setRight(boughtProducts);
 		setLeft(availableProducts);
 	}

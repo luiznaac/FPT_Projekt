@@ -29,9 +29,6 @@ public class ViewShop extends BorderPane {
 		hbox.setSpacing(5);
 		vbox.setSpacing(5);
 		vbox.setPadding(new Insets(5, 5, 5, 5));
-		setRight(vbox);
-		setCenter(products);
-
 		addButton.setDefaultButton(true);
 		addButton.setId("add");
 		deleteButton.setId("delete");
@@ -50,8 +47,10 @@ public class ViewShop extends BorderPane {
 		quantityColumn.setMinWidth(100);
 		quantityColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("quantity"));
 		quantityColumn.setSortable(false);
-
 		products.getColumns().addAll(nameColumn, priceColumn, quantityColumn);
+		//set the BorderPane's children
+		setRight(vbox);
+		setCenter(products);
 	}
 
 	public void addEventHandler(EventHandler<ActionEvent> eventHandler) {
