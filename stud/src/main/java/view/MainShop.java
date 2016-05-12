@@ -1,5 +1,6 @@
 package view;
 
+import controller.ControllerCustomer;
 import controller.ControllerShop;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -22,8 +23,18 @@ public class MainShop extends Application {
 
 		Scene scene = new Scene(view);
 		primaryStage.setScene(scene);
-		primaryStage.setTitle("Shop Test");
+		primaryStage.setTitle("Shop Manager");
 		primaryStage.show();
+
+		Stage secondaryStage = new Stage();
+		ViewCustomer viewCustomer = new ViewCustomer();
+		ControllerCustomer controllerCustomer = new ControllerCustomer();
+		controllerCustomer.link(model, viewCustomer);
+
+		Scene sceneCustomer = new Scene(viewCustomer);
+		secondaryStage.setScene(sceneCustomer);
+		secondaryStage.setTitle("Shop Order");
+		secondaryStage.show();
 	}
 
 }

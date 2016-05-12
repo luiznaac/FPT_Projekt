@@ -5,12 +5,7 @@ import java.util.ArrayList;
 import fpt.com.Product;
 
 
-public class Order extends ArrayList<fpt.com.Product> implements fpt.com.Order {
-
-	@Override
-	public boolean add(Product e) {
-		return add(e);
-	}
+public class Order extends ArrayList<Product> implements fpt.com.Order {
 
 	@Override
 	public boolean delete(Product p) {
