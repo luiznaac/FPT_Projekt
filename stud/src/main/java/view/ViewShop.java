@@ -2,13 +2,17 @@ package view;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import model.Product;
 
 public class ViewShop extends BorderPane {
 
@@ -17,31 +21,37 @@ public class ViewShop extends BorderPane {
 	private TextField quantity = new TextField();
 	private Button addButton = new Button("Add");
 	private Button deleteButton = new Button("Delete");
-	private ListView<fpt.com.Product> products = new ListView<>();
+	private TableView<Product> products = new TableView<>();
 
 	public ViewShop() {
 		HBox hbox = new HBox(addButton, deleteButton);
-		VBox vbox = new VBox(name, price, quantity, hbox);
+		VBox vbox = new VBox(new Text("Name:"), name, new Text("Price:"), price, new Text("Quantity:"), quantity, hbox);
+		hbox.setSpacing(5);
 		vbox.setSpacing(5);
+		vbox.setPadding(new Insets(5, 5, 5, 5));
 		setRight(vbox);
 		setCenter(products);
 
+		addButton.setDefaultButton(true);
 		addButton.setId("add");
 		deleteButton.setId("delete");
+		//set the Name column of the table
+		TableColumn<Product, String> nameColumn = new TableColumn<>("Name");
+		nameColumn.setMinWidth(200);
+		nameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
+		nameColumn.setSortable(false);
+		//set the Price column of the table
+		TableColumn<Product, String> priceColumn = new TableColumn<>("Price");
+		priceColumn.setMinWidth(100);
+		priceColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("price"));
+		priceColumn.setSortable(false);
+		//set the Quantity column of the table
+		TableColumn<Product, String> quantityColumn = new TableColumn<>("Quantity");
+		quantityColumn.setMinWidth(100);
+		quantityColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("quantity"));
+		quantityColumn.setSortable(false);
 
-		products.setCellFactory(c -> {
-			ListCell<fpt.com.Product> cell = new ListCell<fpt.com.Product>(){
-				@Override
-				protected void updateItem(fpt.com.Product product, boolean b) {
-					super.updateItem(product, product == null || b);
-					if (product != null)
-						setText(product.toString());
-					else
-						setText("");
-				}
-			};
-			return cell;
-		});
+		products.getColumns().addAll(nameColumn, priceColumn, quantityColumn);
 	}
 
 	public void addEventHandler(EventHandler<ActionEvent> eventHandler) {
@@ -49,7 +59,7 @@ public class ViewShop extends BorderPane {
 		deleteButton.addEventHandler(ActionEvent.ACTION, eventHandler);
 	}
 
-	public ListView<fpt.com.Product> getList() {
+	public TableView<Product> getList() {
 		return products;
 	}
 
