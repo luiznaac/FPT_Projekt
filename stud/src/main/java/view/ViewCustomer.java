@@ -15,12 +15,6 @@ public class ViewCustomer extends BorderPane {
 	TableView<Product> boughtProducts = new TableView<>();
 
 	public ViewCustomer(){
-		setRight(boughtProducts);
-		setLeft(availableProducts);
-		setBottom(buyButton);
-
-		BorderPane.setAlignment(buyButton, Pos.CENTER_RIGHT);
-
 		//set the Name column of the table
 		TableColumn<Product, String> nameColumn = new TableColumn<>("Name");
 		nameColumn.setMinWidth(200);
@@ -33,8 +27,13 @@ public class ViewCustomer extends BorderPane {
 		TableColumn<Product, String> buyCountColumn = new TableColumn<>("Buy Count");
 		buyCountColumn.setMinWidth(100);
 		buyCountColumn.setSortable(false);
-
 		boughtProducts.getColumns().addAll(nameColumn, priceColumn, buyCountColumn);
+		//set the buyButton to the bottom right of the BorderPane
+		setBottom(buyButton);
+		BorderPane.setAlignment(buyButton, Pos.CENTER_RIGHT);
+		//set the other children
+		setRight(boughtProducts);
+		setLeft(availableProducts);
 	}
 
 	public ListView<Product> getList() {
