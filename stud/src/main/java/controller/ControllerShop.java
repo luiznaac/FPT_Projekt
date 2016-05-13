@@ -14,22 +14,31 @@ public class ControllerShop {
 		view.addEventHandler(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event) {
-				//Es prüft ob Add- oder Delete-Button gedrückt wurde
+				//Es prüft, welcher Button gedrückt wurde
 				//und wählt die richtige Handlung aus.
-				//
-				//wenn Add-Button gedrückt wurde
-				if(((Button)event.getSource()).getId() == "add"){
-					try{
-						model.add(new Product(Double.parseDouble(view.getInputPrice()),
-								Integer.parseInt(view.getInputQuantity()), view.getInputName()));
-					}
-					catch(RuntimeException re){
-						System.out.println("Bad Input");
-					}
+				switch(((Button)event.getSource()).getId()){
+					case "add":
+						try{
+							model.add(new Product(Double.parseDouble(view.getInputPrice()),
+									Integer.parseInt(view.getInputQuantity()), view.getInputName()));
+						}
+						catch(RuntimeException re){
+							System.out.println("Bad Input");
+						}
+						break;
+
+					case "delete":
+						model.remove(view.getList().getSelectionModel().getSelectedItem());
+						break;
+
+					case "load":
+						System.out.println("noch nicht");
+						break;
+
+					case "save":
+						System.out.println("noch nicht");
+						break;
 				}
-				//wenn Delete-Button gedrückt wurde
-				else if(((Button)event.getSource()).getId() == "delete")
-					model.remove(view.getList().getSelectionModel().getSelectedItem());
 			}
 		});
 	}
