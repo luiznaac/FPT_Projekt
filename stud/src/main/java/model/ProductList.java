@@ -11,6 +11,8 @@ public class ProductList extends ArrayList<Product> implements fpt.com.ProductLi
 		return remove(product.getId());
 	}
 
+
+
 	@Override
 	public Product findProductById(long id) {
 		for(Product temp : this)

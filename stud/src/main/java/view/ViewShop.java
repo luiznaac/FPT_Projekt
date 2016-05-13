@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -19,13 +20,14 @@ public class ViewShop extends BorderPane {
 	private TextField name = new TextField();
 	private TextField price = new TextField();
 	private TextField quantity = new TextField();
+	private Label warning = new Label("Bitte kein Komma und Buchstabe \nin Price und Quantity Felder");
 	private Button addButton = new Button("Add");
 	private Button deleteButton = new Button("Delete");
 	private TableView<Product> products = new TableView<>();
 
 	public ViewShop() {
 		HBox hbox = new HBox(addButton, deleteButton);
-		VBox vbox = new VBox(new Text("Name:"), name, new Text("Price:"), price, new Text("Quantity:"), quantity, hbox);
+		VBox vbox = new VBox(new Text("Name:"), name, new Text("Price:"), price, new Text("Quantity:"), quantity, hbox, warning);
 		hbox.setSpacing(5);
 		vbox.setSpacing(5);
 		vbox.setPadding(new Insets(5, 5, 5, 5));
@@ -48,6 +50,7 @@ public class ViewShop extends BorderPane {
 		quantityColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("quantity"));
 		quantityColumn.setSortable(false);
 		products.getColumns().addAll(nameColumn, priceColumn, quantityColumn);
+		warning.setVisible(false);
 		//set the BorderPane's children
 		setRight(vbox);
 		setCenter(products);
@@ -63,15 +66,20 @@ public class ViewShop extends BorderPane {
 	}
 
 	public String getInputName(){
+		warning.setVisible(false);
 		return name.getText();
 	}
 
-	public double getInputPrice(){
-		return Double.parseDouble(price.getText());
+	public String getInputPrice(){
+		return price.getText();
 	}
 
-	public int getInputQuantity(){
-		return Integer.parseInt(quantity.getText());
+	public String getInputQuantity(){
+		return quantity.getText();
+	}
+
+	public Label getLabel(){
+		return warning;
 	}
 
 }
