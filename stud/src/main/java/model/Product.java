@@ -1,5 +1,7 @@
 package model;
 
+import java.text.DecimalFormat;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -15,17 +17,15 @@ public class Product implements fpt.com.Product {
 	private IntegerProperty quantity = new SimpleIntegerProperty();
 	private StringProperty name = new SimpleStringProperty();
 
-	public Product(long id, double price, int quantity, String name){
-		setId(id);
+	public Product(double price, int quantity, String name){
 		setPrice(price);
 		setQuantity(quantity);
 		setName(name);
 	}
 
-	public Product(double price, int quantity, String name){
-		setPrice(price);
-		setQuantity(quantity);
-		setName(name);
+	public Product(long id, double price, int quantity, String name){
+		this(price, quantity, name);
+		setId(id);
 	}
 
 	@Override
@@ -85,7 +85,8 @@ public class Product implements fpt.com.Product {
 
 	@Override
 	public String toString(){
-		return getName() + " | ‎€" + getPrice() + " | " + getQuantity();
+
+		return getName() + " | ‎€" + (new DecimalFormat("0.00")).format(getPrice()) + " | " + getQuantity();
 	}
 
 }

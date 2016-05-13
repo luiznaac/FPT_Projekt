@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-
 import fpt.com.Product;
 
 public class ProductList extends ArrayList<Product> implements fpt.com.ProductList {
@@ -10,8 +9,6 @@ public class ProductList extends ArrayList<Product> implements fpt.com.ProductLi
 	public boolean delete(Product product) {
 		return remove(product.getId());
 	}
-
-
 
 	@Override
 	public Product findProductById(long id) {

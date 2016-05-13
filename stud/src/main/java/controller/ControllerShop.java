@@ -3,7 +3,6 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import model.ModelShop;
 import model.Product;
 import view.ViewShop;
@@ -15,35 +14,23 @@ public class ControllerShop {
 		view.addEventHandler(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event) {
-				//Checks whether the button Add other Delete was pressed
-				//and then does the specific action
+				//Es prüft ob Add- oder Delete-Button gedrückt wurde
+				//und wählt die richtige Handlung aus.
+				//
+				//wenn Add-Button gedrückt wurde
 				if(((Button)event.getSource()).getId() == "add"){
-					Label warning = view.getLabel();
-					String price = view.getInputPrice();
-					String quantity = view.getInputQuantity();
-					String name = view.getInputName();
-
 					try{
-						model.add(new Product(Double.parseDouble(price), Integer.parseInt(quantity), name));
+						model.add(new Product(Double.parseDouble(view.getInputPrice()),
+								Integer.parseInt(view.getInputQuantity()), view.getInputName()));
 					}
 					catch(RuntimeException re){
 						System.out.println("Bad Input");
-						warningMsg(warning,"Bad Input");
 					}
 				}
-
-				//when delete button is pressed
+				//wenn Delete-Button gedrückt wurde
 				else if(((Button)event.getSource()).getId() == "delete")
 					model.remove(view.getList().getSelectionModel().getSelectedItem());
 			}
 		});
 	}
-
-	private void warningMsg(Label label, String text){
-
-			label.setText(text);
-			label.setVisible(true);
-
-	}
-
 }
