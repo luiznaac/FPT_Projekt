@@ -1,7 +1,9 @@
 package model;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.text.DecimalFormat;
-
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -10,23 +12,32 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 
-public class Product implements fpt.com.Product {
+public class Product implements fpt.com.Product, java.io.Externalizable {
 
 	private long id;
+	private StringProperty name = new SimpleStringProperty();
 	private DoubleProperty price = new SimpleDoubleProperty();
 	private IntegerProperty quantity = new SimpleIntegerProperty();
-	private StringProperty name = new SimpleStringProperty();
 
-	public Product(double price, int quantity, String name){
+	public Product(){
+
+	}
+
+	public Product(String name, double price, int quantity){
 		setPrice(price);
 		setQuantity(quantity);
 		setName(name);
 	}
 
-	public Product(long id, double price, int quantity, String name){
-		this(price, quantity, name);
+	public Product(long id, String name, double price, int quantity){
+		this(name, price, quantity);
 		setId(id);
 	}
+
+	/**************
+	 * Methoden von fpt.com.Product
+	 *
+	 **************/
 
 	@Override
 	public long getId() {
@@ -85,8 +96,28 @@ public class Product implements fpt.com.Product {
 
 	@Override
 	public String toString(){
-
 		return getName() + " | ‎€" + (new DecimalFormat("0.00")).format(getPrice()) + " | " + getQuantity();
+	}
+
+	/**************
+	 * Methoden von java.io.Externalizable
+	 *
+	 **************/
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeLong(getId());
+		out.writeObject(getName());
+		out.writeObject(getPrice());
+		out.writeObject(getQuantity());
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+		this.setId((Long)in.readLong());
+		this.setName((String) in.readObject());
+		this.setPrice((Double) in.readObject());
+		this.setQuantity((Integer) in.readObject());
 	}
 
 }

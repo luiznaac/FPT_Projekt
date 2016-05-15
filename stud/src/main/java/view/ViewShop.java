@@ -23,7 +23,7 @@ public class ViewShop extends BorderPane {
 	private Button addButton = new Button("Add");
 	private Button deleteButton = new Button("Delete");
 	private TableView<Product> products = new TableView<>();
-	private ChoiceBox<fpt.com.SerializableStrategy> serializationBox = new ChoiceBox<>();
+	private ChoiceBox<String> serializationBox = new ChoiceBox<>();
 	private Button loadButton = new Button("Load");
 	private Button saveButton = new Button("Save");
 
@@ -41,6 +41,7 @@ public class ViewShop extends BorderPane {
 		HBox serializationHbox = new HBox(serializationBox, loadButton, saveButton);
 		serializationHbox.setSpacing(5);
 		serializationHbox.setPadding(new Insets(5, 5, 5, 0));
+		serializationBox.getItems().addAll("Binary", "XML");
 		loadButton.setId("load");
 		saveButton.setId("save");
 		//set the Name column of the table
@@ -70,6 +71,10 @@ public class ViewShop extends BorderPane {
 		deleteButton.addEventHandler(ActionEvent.ACTION, eventHandler);
 		loadButton.addEventHandler(ActionEvent.ACTION, eventHandler);
 		saveButton.addEventHandler(ActionEvent.ACTION, eventHandler);
+	}
+
+	public ChoiceBox<String> getChoiceBox(){
+		return serializationBox;
 	}
 
 	public TableView<Product> getList() {

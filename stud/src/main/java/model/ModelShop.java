@@ -1,10 +1,12 @@
 package model;
 
 import javafx.collections.ModifiableObservableListBase;
+import serialization.*;
 
 public class ModelShop extends ModifiableObservableListBase<Product> {
 
 	ProductList list = new ProductList();
+	Context context;
 
 	@Override
 	public Product get(int index) {
@@ -29,6 +31,26 @@ public class ModelShop extends ModifiableObservableListBase<Product> {
 	@Override
 	protected Product doRemove(int index) {
 		return (Product) list.remove(index);
+	}
+
+	public void setStrategy(int option){
+		switch(option){
+			case 0:
+				context = new Context(new BinaryStrategy());
+				break;
+		}
+	}
+
+	public void load(){
+		ProductList read = context.load();
+		list.clear();
+		for(fpt.com.Product p : read){
+			this.add((Product) p);
+		}
+	}
+
+	public void save(){
+		context.save(list);
 	}
 
 }

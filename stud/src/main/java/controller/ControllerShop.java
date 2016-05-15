@@ -19,8 +19,8 @@ public class ControllerShop {
 				switch(((Button)event.getSource()).getId()){
 					case "add":
 						try{
-							model.add(new Product(Double.parseDouble(view.getInputPrice()),
-									Integer.parseInt(view.getInputQuantity()), view.getInputName()));
+							model.add(new Product(view.getInputName(), Double.parseDouble(view.getInputPrice()),
+									Integer.parseInt(view.getInputQuantity())));
 						}
 						catch(RuntimeException re){
 							System.out.println("Bad Input");
@@ -32,14 +32,17 @@ public class ControllerShop {
 						break;
 
 					case "load":
-						System.out.println("noch nicht");
+						model.setStrategy(view.getChoiceBox().getSelectionModel().getSelectedIndex());
+						model.load();
 						break;
 
 					case "save":
-						System.out.println("noch nicht");
+						model.setStrategy(view.getChoiceBox().getSelectionModel().getSelectedIndex());
+						model.save();
 						break;
 				}
 			}
 		});
 	}
+
 }

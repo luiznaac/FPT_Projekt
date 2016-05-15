@@ -2,13 +2,13 @@ package serialization;
 
 public class IDGenerator {
 
-	private int gen;
+	private long gen;
 
 	public IDGenerator(){
 		gen = 0;
 	}
 
-	public int getId() throws IDOverflowException {
+	public long getId() throws IDOverflowException {
 		gen++;
 		if(gen > 999999){
 			gen--;
