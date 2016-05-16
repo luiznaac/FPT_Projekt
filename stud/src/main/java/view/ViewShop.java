@@ -30,7 +30,8 @@ public class ViewShop extends BorderPane {
 	public ViewShop() {
 		//set the input area
 		HBox inputHbox = new HBox(addButton, deleteButton);
-		VBox inputVbox = new VBox(new Text("Name:"), name, new Text("Price:"), price, new Text("Quantity:"), quantity, inputHbox);
+		VBox inputVbox = new VBox(new Text("Name:"), name, new Text("Price:"),
+				price, new Text("Quantity:"), quantity, inputHbox);
 		inputHbox.setSpacing(5);
 		inputVbox.setSpacing(5);
 		inputVbox.setPadding(new Insets(5, 5, 5, 5));
@@ -41,7 +42,8 @@ public class ViewShop extends BorderPane {
 		HBox serializationHbox = new HBox(serializationBox, loadButton, saveButton);
 		serializationHbox.setSpacing(5);
 		serializationHbox.setPadding(new Insets(5, 5, 5, 0));
-		serializationBox.getItems().addAll("Binary", "XML");
+		serializationBox.getItems().addAll("Binary Strategy", "XML Strategy", "XStream Strategy");
+		serializationBox.setValue("Binary Strategy");
 		loadButton.setId("load");
 		saveButton.setId("save");
 		//set the Name column of the table
