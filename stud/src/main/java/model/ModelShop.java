@@ -5,8 +5,12 @@ import serialization.*;
 
 public class ModelShop extends ModifiableObservableListBase<Product> {
 
-	ProductList list = new ProductList();
+	ProductList list;
 	Context context;
+
+	public ModelShop(){
+		list = new ProductList();
+	}
 
 	@Override
 	public Product get(int index) {
@@ -43,7 +47,8 @@ public class ModelShop extends ModifiableObservableListBase<Product> {
 
 	public void load(){
 		ProductList read = context.load();
-		list.clear();
+		if(!read.isEmpty()) //if there's nothin to load, the actual list will not be cleared
+			list.clear();
 		for(fpt.com.Product p : read){
 			this.add((Product) p);
 		}
