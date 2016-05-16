@@ -12,6 +12,10 @@ import javafx.beans.value.ObservableValue;
 
 public class Product implements fpt.com.Product {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7500242199982496623L;
 	private long id;
 	private DoubleProperty price = new SimpleDoubleProperty();
 	private IntegerProperty quantity = new SimpleIntegerProperty();

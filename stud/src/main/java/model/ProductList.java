@@ -5,6 +5,11 @@ import fpt.com.Product;
 
 public class ProductList extends ArrayList<Product> implements fpt.com.ProductList {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1474341562263912644L;
+
 	@Override
 	public boolean delete(Product product) {
 		return remove(product.getId());
