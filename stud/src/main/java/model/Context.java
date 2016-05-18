@@ -6,9 +6,11 @@ import serialization.*;
 public class Context {
 
 	private SerializableStrategy strategy;
+	int option;
 
-	public Context(SerializableStrategy strategy){
+	public Context(SerializableStrategy strategy, int option){
 		this.strategy = strategy;
+		this.option = option;
 	}
 
 	public ProductList load(){
@@ -16,7 +18,19 @@ public class Context {
 	}
 
 	public void save(ProductList products){
-		((BinaryStrategy)strategy).writeList(products);
+		switch(option){
+			case 0:
+				((BinaryStrategy)strategy).writeList(products);
+				break;
+			case 1:
+				((XMLStrategy)strategy).writeList(products);
+				break;
+			case 2:
+				((XStreamStrategy)strategy).writeList(products);
+				break;
+
+		}
+
 	}
 
 }

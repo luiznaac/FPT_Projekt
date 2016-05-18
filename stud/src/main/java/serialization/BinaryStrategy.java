@@ -14,9 +14,9 @@ public class BinaryStrategy implements fpt.com.SerializableStrategy {
 	private ObjectInputStream ois;
 	private ObjectOutputStream oos;
 
-	public BinaryStrategy(){
+	public BinaryStrategy(String path){
 		try{
-			open("products.ser");
+			open(path);
 		}catch(IOException ex){
 			System.out.println(ex + " at serialization.BinaryStrategy.BinaryStrategy");
 		}
@@ -25,10 +25,12 @@ public class BinaryStrategy implements fpt.com.SerializableStrategy {
 	@Override
 	public Product readObject() throws IOException {
 		Product read = new Product();
-		try{
-			read = (Product)ois.readObject();
-		}catch(ClassNotFoundException ex){
-			System.out.println(ex + " at serialization.BinaryStrategy.readObject");
+		if(ois != null){
+			try{
+				read = (Product)ois.readObject();
+			}catch(ClassNotFoundException ex){
+				System.out.println(ex + " at serialization.BinaryStrategy.readObject");
+			}
 		}
 		return read;
 	}
@@ -57,12 +59,14 @@ public class BinaryStrategy implements fpt.com.SerializableStrategy {
 
 	public ProductList readList(){
 		ProductList read = new ProductList();
-		try{
-			read = (ProductList)ois.readObject();
-		}catch(ClassNotFoundException ex){
-			System.out.println(ex + " at serialization.BinaryStrategy.deserializeList");
-		}catch(IOException ex){
-			System.out.println("Nothing to load");
+		if(ois != null){
+			try{
+				read = (ProductList)ois.readObject();
+			}catch(ClassNotFoundException ex){
+				System.out.println(ex + " at serialization.BinaryStrategy.deserializeList");
+			}catch(IOException ex){
+				System.out.println("Nothing to load");
+			}
 		}
 		return read;
 	}

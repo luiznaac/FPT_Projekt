@@ -6,16 +6,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import fpt.com.Product;
+import model.Product;
+import model.ProductList;
 
 public class XMLStrategy implements fpt.com.SerializableStrategy {
 
 	private XMLEncoder encoder;
 	private XMLDecoder decoder;
 
-	public XMLStrategy(){
+	public XMLStrategy(String path){
 		try {
-			open("products.xml");
+			open(path);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -23,20 +24,30 @@ public class XMLStrategy implements fpt.com.SerializableStrategy {
 
 	@Override
 	public Product readObject() throws IOException {
-		Product read = (Product)decoder.readObject();
+		Product read = new Product();
+		try{
+			read = (Product)decoder.readObject();
+		}catch(Exception ex){
+			System.out.println("Nothing to load");
+		}
 		return read;
 	}
 
 	@Override
-	public void writeObject(Product obj) throws IOException {
-		encoder.writeObject(obj);
-		encoder.flush();
+	public void writeObject(fpt.com.Product obj) throws IOException {
+		try{
+			encoder.writeObject(obj);
+			encoder.flush();
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
 	}
 
 	@Override
 	public void close() throws IOException {
-		// TODO Auto-generated method stub
-
+		if(decoder != null)
+			decoder.close();
+		encoder.close();
 	}
 
 	@Override
@@ -46,6 +57,27 @@ public class XMLStrategy implements fpt.com.SerializableStrategy {
 		else
 			decoder = null;
 		encoder = new XMLEncoder(output);
+	}
+
+	public ProductList readList(){
+		ProductList read = new ProductList();
+		if(decoder != null){
+			try{
+				read = (ProductList)decoder.readObject();
+			}catch(Exception ex){
+				System.out.println("Nothing to load");
+			}
+		}
+		return read;
+	}
+
+	public void writeList(ProductList products){
+		try{
+			encoder.writeObject(products);
+			encoder.flush();
+		}catch(Exception ex){
+			System.out.println(ex + " at serialization.BinaryStrategy.serializeList");
+		}
 	}
 
 }
