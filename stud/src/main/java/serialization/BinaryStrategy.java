@@ -68,6 +68,7 @@ public class BinaryStrategy implements fpt.com.SerializableStrategy {
 				System.out.println("Nothing to load");
 			}
 		}
+		writeList(read);
 		return read;
 	}
 

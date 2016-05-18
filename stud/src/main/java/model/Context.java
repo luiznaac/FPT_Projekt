@@ -14,7 +14,15 @@ public class Context {
 	}
 
 	public ProductList load(){
-		return ((BinaryStrategy)strategy).readList();
+		ProductList read = new ProductList();
+		if(option == 0)
+			read = ((BinaryStrategy)strategy).readList();
+		else if(option == 1)
+			read = ((XMLStrategy)strategy).readList();
+		else if(option == 2)
+			read = ((XStreamStrategy)strategy).readList();
+
+		return read;
 	}
 
 	public void save(ProductList products){

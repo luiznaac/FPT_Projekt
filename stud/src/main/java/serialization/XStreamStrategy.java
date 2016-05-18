@@ -60,12 +60,11 @@ public class XStreamStrategy implements fpt.com.SerializableStrategy {
 		this.input = input;
 		this.output = output;
 
-		xstream.alias("waren", List.class);
+		xstream.alias("waren", ProductList.class);
 		xstream.alias("ware", Product.class);
 		xstream.aliasField("name", Product.class, "name");
 		xstream.aliasField("preis", Product.class, "price");
 		xstream.aliasField("anzahl", Product.class, "quantity");
-		xstream.addImplicitCollection(ProductList.class, "waren");
 		xstream.useAttributeFor(Product.class, "id");
 		xstream.registerConverter(new IDConverter());
 		xstream.registerConverter(new NameConverter());
@@ -82,10 +81,20 @@ public class XStreamStrategy implements fpt.com.SerializableStrategy {
 				System.out.println("Nothing to load");
 			}
 		}
+		writeList(read);
 		return read;
 	}
 
 	public void writeList(ProductList products){
+		IDGenerator idgen = new IDGenerator();
+		for(fpt.com.Product p : products){
+			try{
+				((Product)p).setId(idgen.getId());
+			}catch(IDOverflowException ex){
+				System.out.println(ex);
+			}
+		}
+
 		try{
 			xstream.toXML((ArrayList)products, output);
 		}catch(Exception ex){
