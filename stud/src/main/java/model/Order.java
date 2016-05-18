@@ -43,7 +43,4 @@ public class Order extends ArrayList<Product> implements fpt.com.Order {
 		}
 		return quantity;
 	}
-
-
-
 }

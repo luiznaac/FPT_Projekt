@@ -5,8 +5,9 @@ import controller.ControllerShop;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.ModelShop;
+import model.*;
 import view.ViewShop;
+import serialization.*;
 
 public class MainShop extends Application {
 
