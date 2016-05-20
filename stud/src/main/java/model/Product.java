@@ -11,6 +11,10 @@ import javafx.beans.value.ObservableValue;
 
 public class Product implements fpt.com.Product, java.io.Externalizable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7500242199982496623L;
 	private long id;
 	private SimpleStringProperty name;
 	private SimpleDoubleProperty price;
