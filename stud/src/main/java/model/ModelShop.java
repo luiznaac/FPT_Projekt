@@ -40,13 +40,13 @@ public class ModelShop extends ModifiableObservableListBase<Product> {
 	public void setStrategy(int option){
 		switch(option){
 			case 0:
-				context = new Context(new BinaryStrategy("save/products.ser"), 0);
+				context = new Context(new BinaryStrategy("products.ser"), 0);
 				break;
 			case 1:
-				context = new Context(new XMLStrategy("save/products.xml"), 1);
+				context = new Context(new XMLStrategy("products.xml"), 1);
 				break;
 			case 2:
-				context = new Context(new XStreamStrategy("save/products.xml"), 2);
+				context = new Context(new XStreamStrategy("products.xml"), 2);
 				break;
 		}
 	}
