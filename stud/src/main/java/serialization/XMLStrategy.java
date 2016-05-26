@@ -73,15 +73,6 @@ public class XMLStrategy implements fpt.com.SerializableStrategy {
 	}
 
 	public void writeList(ProductList products){
-		IDGenerator idgen = new IDGenerator();
-		for(fpt.com.Product p : products){
-			try{
-				((Product)p).setId(idgen.getId());
-			}catch(IDOverflowException ex){
-				System.out.println(ex);
-			}
-		}
-
 		try{
 			encoder.writeObject(products);
 			encoder.flush();

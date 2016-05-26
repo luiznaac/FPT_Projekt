@@ -36,7 +36,6 @@ public class Context {
 			case 2:
 				((XStreamStrategy)strategy).writeList(products);
 				break;
-
 		}
 
 	}

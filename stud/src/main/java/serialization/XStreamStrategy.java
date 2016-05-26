@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.thoughtworks.xstream.XStream;
+
+import model.IDGenerator;
 import model.Product;
 import model.ProductList;
 
@@ -15,11 +17,9 @@ public class XStreamStrategy implements fpt.com.SerializableStrategy {
 	XStream xstream;
 	InputStream input;
 	OutputStream output;
-	IDGenerator idgenerator;
 
 	public XStreamStrategy(String path) {
 		xstream = createXStream(Product.class);
-		idgenerator = new IDGenerator();
 		try{
 			open(path);
 		}catch(IOException ex){
@@ -41,7 +41,6 @@ public class XStreamStrategy implements fpt.com.SerializableStrategy {
 	@Override
 	public void writeObject(fpt.com.Product obj) throws IOException {
 		try{
-			obj.setId(idgenerator.getId());
 			xstream.toXML(obj, output);
 		}catch(Exception ex){
 			ex.printStackTrace();

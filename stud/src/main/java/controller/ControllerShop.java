@@ -23,7 +23,7 @@ public class ControllerShop {
 									Integer.parseInt(view.getInputQuantity())));
 						}
 						catch(RuntimeException re){
-							System.out.println("Bad Input");
+							System.out.println(re);
 						}
 						break;
 

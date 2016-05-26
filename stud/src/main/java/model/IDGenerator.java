@@ -1,4 +1,6 @@
-package serialization;
+package model;
+
+import serialization.IDOverflowException;
 
 public class IDGenerator {
 

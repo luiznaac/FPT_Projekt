@@ -8,13 +8,11 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import serialization.IDOverflowException;
 
 public class Product implements fpt.com.Product, java.io.Externalizable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7500242199982496623L;
+	private static IDGenerator idgen = new IDGenerator();
 	private long id;
 	private SimpleStringProperty name;
 	private SimpleDoubleProperty price;
@@ -24,17 +22,22 @@ public class Product implements fpt.com.Product, java.io.Externalizable {
 		name = new SimpleStringProperty();
 		price = new SimpleDoubleProperty();
 		quantity = new SimpleIntegerProperty();
+		try {
+			id = idgen.getId();
+		} catch (IDOverflowException e) {
+			System.out.println(e);
+		}
 	}
 
 	public Product(String name, double price, int quantity){
 		this.name = new SimpleStringProperty(name);
 		this.price = new SimpleDoubleProperty(price);
 		this.quantity = new SimpleIntegerProperty(quantity);
-	}
-
-	public Product(long id, String name, double price, int quantity){
-		this(name, price, quantity);
-		setId(id);
+		try {
+			id = idgen.getId();
+		} catch (IDOverflowException e) {
+			System.out.println(e);
+		}
 	}
 
 	/**************

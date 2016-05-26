@@ -7,9 +7,6 @@ import fpt.com.Product;
 
 public class Order extends ArrayList<Product> implements fpt.com.Order {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3331845147165087684L;
 
 	@Override
