@@ -40,28 +40,39 @@ public class ModelShop extends ModifiableObservableListBase<Product> {
 	public void setStrategy(int option){
 		switch(option){
 			case 0:
-				context = new Context(new BinaryStrategy("products.ser"), 0);
+				context = new Context(new BinaryStrategy("products.ser"));
 				break;
 			case 1:
-				context = new Context(new XMLStrategy("products.xml"), 1);
+				context = new Context(new XMLStrategy("products.xml"));
 				break;
 			case 2:
-				context = new Context(new XStreamStrategy("products.xml"), 2);
+				context = new Context(new XStreamStrategy("products.xml"));
 				break;
 		}
 	}
 
 	public void load(){
-		ProductList read = context.load();
-		if(!read.isEmpty()) //if there's nothing to load, the actual list will not be cleared
-			list.clear();
-		for(fpt.com.Product p : read){
-			this.add((Product) p);
+		ProductList read = new ProductList();
+		boolean flag = true;
+		while(flag){
+			try {
+				read.add((Product)context.load());
+			} catch (Exception e) {
+				flag = false;
+			}
 		}
+		if(!read.isEmpty()){
+			list.clear();
+			for(fpt.com.Product p : read)
+				this.add((Product) p);
+		}
+		context.close();
 	}
 
 	public void save(){
-		context.save(list);
+		for(fpt.com.Product p : list)
+			context.save((Product)p);
+		context.close();
 	}
 
 }

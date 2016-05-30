@@ -1,43 +1,39 @@
 package model;
 
+import java.io.IOException;
+
 import fpt.com.SerializableStrategy;
-import serialization.*;
 
 public class Context {
 
 	private SerializableStrategy strategy;
-	int option;
 
-	public Context(SerializableStrategy strategy, int option){
+	public Context(SerializableStrategy strategy){
 		this.strategy = strategy;
-		this.option = option;
 	}
 
-	public ProductList load(){
-		ProductList read = new ProductList();
-		if(option == 0)
-			read = ((BinaryStrategy)strategy).readList();
-		else if(option == 1)
-			read = ((XMLStrategy)strategy).readList();
-		else if(option == 2)
-			read = ((XStreamStrategy)strategy).readList();
+	public Product load() throws IOException{
+		Product read = new Product();
+		read = (Product)strategy.readObject();
 
 		return read;
 	}
 
-	public void save(ProductList products){
-		switch(option){
-			case 0:
-				((BinaryStrategy)strategy).writeList(products);
-				break;
-			case 1:
-				((XMLStrategy)strategy).writeList(products);
-				break;
-			case 2:
-				((XStreamStrategy)strategy).writeList(products);
-				break;
+	public void save(Product product){
+		try {
+			strategy.writeObject(product);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
+	}
+
+	public void close(){
+		try {
+			strategy.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

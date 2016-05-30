@@ -2,6 +2,8 @@ package serialization;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +16,10 @@ import model.ProductList;
 
 public class XStreamStrategy implements fpt.com.SerializableStrategy {
 
-	XStream xstream;
-	InputStream input;
-	OutputStream output;
+	ObjectInputStream input;
+	ObjectOutputStream output;
 
 	public XStreamStrategy(String path) {
-		xstream = createXStream(Product.class);
 		try{
 			open(path);
 		}catch(IOException ex){
@@ -28,20 +28,20 @@ public class XStreamStrategy implements fpt.com.SerializableStrategy {
 	}
 
 	@Override
-	public fpt.com.Product readObject() throws IOException {
+	public Product readObject() throws IOException {
 		Product read = null;
-		try{
-			read = (Product) xstream.fromXML(input);
-		}catch(Exception ex){
-			ex.printStackTrace();
-		}
+			try {
+				read = (Product) input.readObject();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
 		return read;
 	}
 
 	@Override
 	public void writeObject(fpt.com.Product obj) throws IOException {
 		try{
-			xstream.toXML(obj, output);
+			output.writeObject((Product)obj);
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
@@ -56,10 +56,15 @@ public class XStreamStrategy implements fpt.com.SerializableStrategy {
 
 	@Override
 	public void open(InputStream input, OutputStream output) throws IOException {
-		this.input = input;
-		this.output = output;
+		XStream xstream = createXStream(Product.class);
+		if(input == null){
+			this.input = null;
 
-		xstream.alias("waren", ProductList.class);
+		}
+		else
+			this.input = xstream.createObjectInputStream(input);
+		this.output = xstream.createObjectOutputStream(output, "waren");
+
 		xstream.alias("ware", Product.class);
 		xstream.aliasField("name", Product.class, "name");
 		xstream.aliasField("preis", Product.class, "price");
@@ -69,36 +74,6 @@ public class XStreamStrategy implements fpt.com.SerializableStrategy {
 		xstream.registerConverter(new NameConverter());
 		xstream.registerConverter(new PriceConverter());
 		xstream.registerConverter(new QuantityConverter());
-	}
-
-	public ProductList readList(){
-		ProductList read = new ProductList();
-		if(input != null){
-			try{
-				read = (ProductList) xstream.fromXML(input);
-			}catch(Exception ex){
-				System.out.println("Nothing to load");
-			}
-		}
-		writeList(read);
-		return read;
-	}
-
-	public void writeList(ProductList products){
-		IDGenerator idgen = new IDGenerator();
-		for(fpt.com.Product p : products){
-			try{
-				((Product)p).setId(idgen.getId());
-			}catch(IDOverflowException ex){
-				System.out.println(ex);
-			}
-		}
-
-		try{
-			xstream.toXML((ArrayList)products, output);
-		}catch(Exception ex){
-			System.out.println(ex + " at serialization.BinaryStrategy.serializeList");
-		}
 	}
 
 }
