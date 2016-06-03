@@ -5,8 +5,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-
-import model.ProductList;
 import model.Product;
 
 public class BinaryStrategy implements fpt.com.SerializableStrategy {

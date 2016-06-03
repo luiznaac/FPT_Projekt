@@ -3,7 +3,6 @@ package model;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.text.DecimalFormat;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -98,11 +97,6 @@ public class Product implements fpt.com.Product, java.io.Externalizable {
 	@Override
 	public ObservableValue<Number> quantityProperty() {
 		return quantity;
-	}
-
-	@Override
-	public String toString(){
-		return getName() + " | ‎€" + (new DecimalFormat("0.00")).format(getPrice()) + " | " + getQuantity();
 	}
 
 	/**************

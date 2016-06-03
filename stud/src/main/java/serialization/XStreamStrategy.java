@@ -5,19 +5,13 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.thoughtworks.xstream.XStream;
-
-import model.IDGenerator;
 import model.Product;
-import model.ProductList;
 
 public class XStreamStrategy implements fpt.com.SerializableStrategy {
 
-	ObjectInputStream input;
-	ObjectOutputStream output;
+	private ObjectInputStream input;
+	private ObjectOutputStream output;
 
 	public XStreamStrategy(String path) {
 		try{

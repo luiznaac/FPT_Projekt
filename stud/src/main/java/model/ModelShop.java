@@ -5,8 +5,8 @@ import serialization.*;
 
 public class ModelShop extends ModifiableObservableListBase<Product> {
 
-	ProductList list;
-	Context context;
+	private ProductList list;
+	private Context context;
 
 	public ModelShop(){
 		list = new ProductList();

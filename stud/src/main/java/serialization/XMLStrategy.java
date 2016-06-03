@@ -5,9 +5,7 @@ import java.beans.XMLEncoder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import model.Product;
-import model.ProductList;
 
 public class XMLStrategy implements fpt.com.SerializableStrategy {
 
