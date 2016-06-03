@@ -1,6 +1,8 @@
 package problem4;
 
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class WaitingQueue {
 
@@ -9,10 +11,12 @@ public class WaitingQueue {
 	private final int MIN_LINE_CUSTOMERS = 6;	//Min Anzahl der Kunden, um eine neue Kasse zu öffnen
 	private boolean stop;
 	private ArrayList<Cashpoint> cashiers;
+	private Lock lock;
 
 	public WaitingQueue() {
 		stop = false;
 		cashiers = new ArrayList<>();
+		lock = new ReentrantLock();
 	}
 
 	public void put(int data){
@@ -45,7 +49,7 @@ public class WaitingQueue {
 
 	private void newCashpoint(){
 		if(cashiers.size() < MIN_LINE_CUSTOMERS){
-			Cashpoint cptemp = new Cashpoint(cashiers.size() + 1);
+			Cashpoint cptemp = new Cashpoint(cashiers.size() + 1, lock);
 			cashiers.add(cptemp);
 			Thread ttemp = new Thread(cptemp);
 			ttemp.start();
