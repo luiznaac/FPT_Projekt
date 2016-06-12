@@ -12,7 +12,7 @@ public class JDBCConnector {
 			e.printStackTrace();
 		}
 		try {
-			con =DriverManager.getConnection(" jdbc:postgresql://java.is.uni-due.de/ws1011", "ws1011",
+			con =DriverManager.getConnection("jdbc:postgresql://java.is.uni-due.de/ws1011", "ws1011",
 					"ftpw10");
 			//System.out.println("connected");
 			System.out.println(con.getMetaData().getURL());
