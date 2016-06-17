@@ -48,6 +48,9 @@ public class ModelShop extends ModifiableObservableListBase<Product> {
 			case 2:
 				context = new Context(new XStreamStrategy("products.xml"));
 				break;
+			case 3:
+				context = new Context(new JDBCConnector());
+				break;
 		}
 	}
 

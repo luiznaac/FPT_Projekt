@@ -1,15 +1,11 @@
 package view;
 
-import java.io.IOException;
-
 import controller.ControllerCustomer;
 import controller.ControllerShop;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.*;
-import view.ViewShop;
-import serialization.*;
 
 public class MainShop extends Application {
 
@@ -56,6 +52,14 @@ public class MainShop extends Application {
 //		System.out.println(p5);
 //		System.out.println(p6);
 //		bs2.close();
+
+//		OpenJPAConnector db = new OpenJPAConnector();
+//		db.initialize();
+//		db.write(new Product("test", 250, 25));
+//		for (int i = 2759 ;  ; i++) {
+//			Product testP = db.read(i);
+//			System.out.println(testP);
+//		}
 	}
 
 }
