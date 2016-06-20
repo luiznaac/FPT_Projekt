@@ -51,6 +51,9 @@ public class ModelShop extends ModifiableObservableListBase<Product> {
 			case 3:
 				context = new Context(new JDBCConnector());
 				break;
+			case 4:
+				context = new Context(new OpenJPAConnector());
+				break;
 		}
 	}
 

@@ -42,7 +42,11 @@ public class ViewShop extends BorderPane {
 		HBox serializationHbox = new HBox(serializationBox, loadButton, saveButton);
 		serializationHbox.setSpacing(5);
 		serializationHbox.setPadding(new Insets(5, 5, 5, 0));
-		serializationBox.getItems().addAll("Binary Strategy", "XML Strategy", "XStream Strategy", "Database Strategy");
+		serializationBox.getItems().addAll("Binary Strategy",
+										   "XML Strategy",
+										   "XStream Strategy",
+										   "Database (JDBC) Strategy",
+										   "Database (OpenJPA) Strategy");
 		serializationBox.setValue("Binary Strategy");
 		loadButton.setId("load");
 		saveButton.setId("save");

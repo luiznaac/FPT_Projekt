@@ -3,16 +3,12 @@ package model;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-
-import javax.sql.RowSet;
-
 import fpt.com.db.*;
 
 public class JDBCConnector extends AbstractDatabaseStrategy {
 
 	private static Connection con;
-	private long id;
-	private ArrayList<Product> products;
+	private ArrayList<Product> products; //ArrayList mit gelesenen Produkten von DB
 
 	public JDBCConnector() {
 		try {
@@ -21,15 +17,18 @@ public class JDBCConnector extends AbstractDatabaseStrategy {
 			e.printStackTrace();
 		}
 		try {
-			con =DriverManager.getConnection("jdbc:postgresql://java.is.uni-due.de/ws1011",
+			con = DriverManager.getConnection("jdbc:postgresql://java.is.uni-due.de/ws1011",
 					"ws1011", "ftpw10");
-			//System.out.println("connected");
 			System.out.println(con.getMetaData().getURL());
 			System.out.println(con.getMetaData().getUserName());
+			//zeigt alle Tabellen der Datenbank an
+			String[] types = {"TABLE"};
+			ResultSet rsTables = con.getMetaData().getTables(null, null, "%", types);
+			while(rsTables.next())
+				System.out.println(rsTables.getString("TABLE_NAME"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		id = 0;
 	}
 
 	public long insert(String name, double price, int quantity) {
@@ -60,8 +59,9 @@ public class JDBCConnector extends AbstractDatabaseStrategy {
 
 	public Product read(long productId) {
 		Product product = new Product();
-		ResultSet rs = null ;
+		ResultSet rs = null;
 		String sql = "SELECT id, name, price, quantity FROM products WHERE id=?";
+
 		try (PreparedStatement stmt = con.prepareStatement(sql)) {
 			stmt.setLong(1, productId);
 			stmt.setMaxRows(20);
@@ -72,8 +72,6 @@ public class JDBCConnector extends AbstractDatabaseStrategy {
 				product.setPrice(rs.getLong("price"));
 				product.setQuantity(rs.getInt("quantity"));
 			}
-
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally{
@@ -81,47 +79,40 @@ public class JDBCConnector extends AbstractDatabaseStrategy {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-
 		}
 		return product;
 	}
+
 	public void readProducts(int max){
-		ResultSet rs = null ;
+		ResultSet rs = null;
 		products = new ArrayList<Product>();
-		String sql = "SELECT * FROM products LIMIT "+max;
+		String sql = "SELECT * FROM products LIMIT ?";
 		try (PreparedStatement stmt = con.prepareStatement(sql)) {
-			//stmt.setMaxRows(max);
+			stmt.setInt(1, max);
 			rs = (ResultSet) stmt.executeQuery();
 			while (rs.next()) {
 				products.add(new Product(rs.getString("name"), rs.getDouble("price"), rs.getInt("quantity")));
 			}
-
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally{
-			if(rs  != null){
+			if(rs != null){
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-
 		}
-
 	}
 
 	@Override
 	public Product readObject() throws IOException {
-		if(products==null){
-			readProducts(90);
-		}
+		if(products == null)
+			readProducts(50);
 		return products.remove(0);
 	}
 
