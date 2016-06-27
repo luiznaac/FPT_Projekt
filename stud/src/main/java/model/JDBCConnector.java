@@ -94,7 +94,7 @@ public class JDBCConnector extends AbstractDatabaseStrategy {
 			stmt.setInt(1, max);
 			rs = (ResultSet) stmt.executeQuery();
 			while (rs.next()) {
-				products.add(new Product(rs.getString("name"), rs.getDouble("price"), rs.getInt("quantity")));
+				products.add(new Product(rs.getLong("id"), rs.getString("name"), rs.getDouble("price"), rs.getInt("quantity")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

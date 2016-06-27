@@ -48,6 +48,13 @@ public class Product implements fpt.com.Product, java.io.Externalizable {
 		this.quantity = new SimpleIntegerProperty(quantity);
 	}
 
+	public Product(long id, String name, double price, int quantity){
+		this.id = id;
+		this.name = new SimpleStringProperty(name);
+		this.price = new SimpleDoubleProperty(price);
+		this.quantity = new SimpleIntegerProperty(quantity);
+	}
+
 	/**************
 	 * Methoden von fpt.com.Product
 	 *
@@ -127,6 +134,11 @@ public class Product implements fpt.com.Product, java.io.Externalizable {
 		this.setName((String) in.readObject());
 		this.setPrice((Double) in.readObject());
 		this.setQuantity((Integer) in.readObject());
+	}
+
+	@Override
+	public String toString() {
+		return getName() + " | " + getPrice() + " | " + getQuantity();
 	}
 
 }

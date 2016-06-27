@@ -40,12 +40,12 @@ public class Cashpoint implements Runnable {
 			int value = customers.remove(0)*20;
 			System.out.println("Kasse " + id + ": Abarbeiten eines Kundes");
 			System.out.println("         Noch " + customers.size() + " Kunden warten");
-			lock.lock();
 			//die Abarbeitung eines Kundes kann von 6 bis 10 Sekunden dauern
 			try {
 				Thread.sleep(rn.nextInt(6000) + 4000);
 			} catch (InterruptedException e) {
 			}
+			lock.lock();
 			balance.update(this.id, value);
 			lock.unlock();
 		}

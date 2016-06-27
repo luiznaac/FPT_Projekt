@@ -14,6 +14,7 @@ public class Context {
 	public Product load() throws IOException{
 		Product read = new Product();
 		read = (Product)strategy.readObject();
+		System.out.println(read.getId());
 		if(read == null)
 			throw(new IOException());
 		return read;

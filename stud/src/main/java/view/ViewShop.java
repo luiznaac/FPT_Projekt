@@ -31,7 +31,7 @@ public class ViewShop extends BorderPane {
 		//set the input area
 		HBox inputHbox = new HBox(addButton, deleteButton);
 		VBox inputVbox = new VBox(new Text("Name:"), name, new Text("Price:"),
-				price, new Text("Quantity:"), quantity, inputHbox);
+								  price, new Text("Quantity:"), quantity, inputHbox);
 		inputHbox.setSpacing(5);
 		inputVbox.setSpacing(5);
 		inputVbox.setPadding(new Insets(5, 5, 5, 5));

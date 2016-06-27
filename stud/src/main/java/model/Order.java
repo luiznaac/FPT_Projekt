@@ -7,11 +7,25 @@ import fpt.com.Product;
 
 public class Order extends ArrayList<Product> implements fpt.com.Order {
 
-	private static final long serialVersionUID = -3331845147165087684L;
+	private static final long serialVersionUID = 1L;
+	private Double sum = 0.0;
+
+	@Override
+	public boolean add(Product e){
+		if(super.add(e)){
+			sum += e.getQuantity() * e.getPrice();
+			return true;
+		}
+		return false;
+	}
 
 	@Override
 	public boolean delete(Product p) {
-		return remove(p);
+		if(super.remove(p)){
+			sum -= p.getQuantity() * p.getPrice();
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -30,10 +44,6 @@ public class Order extends ArrayList<Product> implements fpt.com.Order {
 
 	@Override
 	public double getSum() {
-		double sum = 0;
-		for(Product temp : this){
-			sum += temp.getPrice();
-		}
 		return sum;
 	}
 
@@ -45,4 +55,14 @@ public class Order extends ArrayList<Product> implements fpt.com.Order {
 		}
 		return quantity;
 	}
+
+	@Override
+	public String toString() {
+		String msg = "";
+		for(Product p : this){
+			msg += p.getName() + " " + p.getQuantity() + " " + p.getQuantity()*p.getPrice() + "EUR\n";
+		}
+		return msg;
+	}
+
 }
