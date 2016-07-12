@@ -75,6 +75,7 @@ class DatagramClientThread extends Thread {
 			byte[] myDate = new byte[1024];
 			myDate = new String("Command unknown").getBytes();
 			packet = new DatagramPacket(myDate, myDate.length, address, port);
+
 			try {
 				socket.send(packet);
 			} catch (IOException e) {

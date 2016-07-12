@@ -213,10 +213,10 @@ public class ViewCustomer extends BorderPane {
 								}
 							}
 						} catch (IOException e1) {
-							e1.printStackTrace();
+							break;
 						}
 					} catch (SocketException e1) {
-						e1.printStackTrace();
+						break;
 					}
 				}
 			}

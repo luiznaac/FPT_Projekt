@@ -11,6 +11,7 @@ public class ControllerShop {
 
 	public void link(ModelShop model, ViewShop view) {
 		view.getList().setItems(model);
+		view.getChat().setItems(model.getMessagesList());
 		view.addEventHandler(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event) {
@@ -40,6 +41,9 @@ public class ControllerShop {
 						model.setStrategy(view.getChoiceBox().getSelectionModel().getSelectedIndex());
 						model.save();
 						break;
+
+					case "send":
+						model.sendMessage(view.getInputChat());
 				}
 			}
 		});

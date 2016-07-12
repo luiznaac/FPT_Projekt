@@ -5,10 +5,17 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.Naming;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
+import chat.ChatServer;
 import javafx.util.Pair;
 import fpt.com.Order;
 import fpt.com.Product;
@@ -25,15 +32,19 @@ public class Warehouse {
 		int tcpPort = 6666;
 		Lock lock = new ReentrantLock();
 		boughtProducts = new model.Order();
+		try {
+			LocateRegistry.createRegistry(1099);
+			Remote chatServer = new ChatServer();
+			Naming.rebind("//127.0.0.1:1099/server", chatServer);
+		} catch (RemoteException | MalformedURLException e2) {
+			e2.printStackTrace();
+		}
 
 		try (ServerSocket server = new ServerSocket(tcpPort)) {
-			int connections = 0;
-			while (true) {
+			while(true) {
 				try {
 					Socket socket = server.accept();
-					System.out.println(socket);
-					connections++;
-					new ClientThread(connections, socket, lock, boughtProducts).start();
+					new ClientThread(socket, lock, boughtProducts).start();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -47,13 +58,11 @@ public class Warehouse {
 
 class ClientThread extends Thread {
 
-	private int connectionNumber;
 	private Socket socket;
 	private Lock lock;
 	private Order boughtProducts;
 
-	public ClientThread(int connectionNumber, Socket socket, Lock lock, Order boughtProducts) {
-		this.connectionNumber = connectionNumber;
+	public ClientThread(Socket socket, Lock lock, Order boughtProducts) {
 		this.socket = socket;
 		this.lock = lock;
 		this.boughtProducts = boughtProducts;
@@ -64,7 +73,6 @@ class ClientThread extends Thread {
 				OutputStream out = socket.getOutputStream()) {
 			ObjectInputStream ois = new ObjectInputStream(in);
 			ObjectOutputStream oos = new ObjectOutputStream(out);
-//			System.out.println("cato os bagui");
 			while(true) {
 				Pair<Pair<String, String>, Order> read = null;
 				try {
@@ -83,6 +91,8 @@ class ClientThread extends Thread {
 							for(Product p : order){
 								boughtProducts.add(p);
 							}
+							oos.writeObject(order);
+							oos.flush();
 							System.out.println("Order eingegangen:");
 							System.out.print(order);
 							System.out.println("Orders Gesamt:");
@@ -92,8 +102,6 @@ class ClientThread extends Thread {
 							System.out.println("Gesamtzahl: " + boughtProducts.getQuantity());
 							System.out.println("Gesamtwert: " + boughtProducts.getSum() + "EUR");
 							lock.unlock();
-							oos.writeObject(order);
-							oos.flush();
 						}
 
 					}

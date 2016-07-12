@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -26,6 +27,9 @@ public class ViewShop extends BorderPane {
 	private ChoiceBox<String> serializationBox = new ChoiceBox<>();
 	private Button loadButton = new Button("Load");
 	private Button saveButton = new Button("Save");
+	private ListView<String> messages = new ListView<>();
+	private TextField message = new TextField();
+	private Button sendButton = new Button("Send");
 
 	public ViewShop() {
 		//set the input area
@@ -35,7 +39,6 @@ public class ViewShop extends BorderPane {
 		inputHbox.setSpacing(5);
 		inputVbox.setSpacing(5);
 		inputVbox.setPadding(new Insets(5, 5, 5, 5));
-		addButton.setDefaultButton(true);
 		addButton.setId("add");
 		deleteButton.setId("delete");
 		//set the serialization strategy area
@@ -66,9 +69,15 @@ public class ViewShop extends BorderPane {
 		quantityColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("quantity"));
 		quantityColumn.setSortable(false);
 		products.getColumns().addAll(nameColumn, priceColumn, quantityColumn);
+		//chat
+		sendButton.setId("send");
+		sendButton.setDefaultButton(true);
+		HBox chatHbox = new HBox(message, sendButton);
+		VBox chatVbox = new VBox(messages, chatHbox);
 		//set the BorderPane's children
-		setRight(inputVbox);
-		setCenter(products);
+		setLeft(products);
+		setCenter(inputVbox);
+		setRight(chatVbox);
 		setBottom(serializationHbox);
 	}
 
@@ -77,9 +86,10 @@ public class ViewShop extends BorderPane {
 		deleteButton.addEventHandler(ActionEvent.ACTION, eventHandler);
 		loadButton.addEventHandler(ActionEvent.ACTION, eventHandler);
 		saveButton.addEventHandler(ActionEvent.ACTION, eventHandler);
+		sendButton.addEventHandler(ActionEvent.ACTION, eventHandler);
 	}
 
-	public ChoiceBox<String> getChoiceBox(){
+	public ChoiceBox<String> getChoiceBox() {
 		return serializationBox;
 	}
 
@@ -87,15 +97,23 @@ public class ViewShop extends BorderPane {
 		return products;
 	}
 
-	public String getInputName(){
+	public ListView<String> getChat() {
+		return messages;
+	}
+
+	public String getInputName() {
 		return name.getText();
 	}
 
-	public String getInputPrice(){
+	public String getInputPrice() {
 		return price.getText();
 	}
 
-	public String getInputQuantity(){
+	public String getInputQuantity() {
 		return quantity.getText();
+	}
+
+	public String getInputChat() {
+		return message.getText();
 	}
 }

@@ -1,5 +1,8 @@
 package model;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Optional;
 import javafx.collections.FXCollections;
@@ -7,7 +10,6 @@ import javafx.collections.ModifiableObservableListBase;
 import javafx.collections.ObservableList;
 import javafx.util.Pair;
 import serialization.*;
-import view.Client;
 
 public class ModelShop extends ModifiableObservableListBase<Product> {
 
@@ -15,12 +17,26 @@ public class ModelShop extends ModifiableObservableListBase<Product> {
 	private Context context;
 	private Order order;
 	private ObservableList<Product> bought;
+	private ObservableList<String> messages;
 	private Client client;
+	private chat.Client chatClient;
+	private boolean orderReset;
 
 	public ModelShop(){
 		list = new ProductList();
 		bought = FXCollections.observableArrayList(new ArrayList<Product>());
 		client = null;
+		orderReset = false;
+		messages = FXCollections.observableArrayList(new ArrayList<String>());
+		try {
+			chatClient = new chat.Client("BENUTZERNAME", messages);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -97,8 +113,10 @@ public class ModelShop extends ModifiableObservableListBase<Product> {
 	}
 
 	public void addToOrder(Product p, String quantity){
-		if(order == null)
+		if(order == null || orderReset){
 			order = new Order();
+			orderReset = false;
+		}
 		try {
 			int q = Integer.parseInt(quantity);
 			if(p.getQuantity() < q)
@@ -117,6 +135,10 @@ public class ModelShop extends ModifiableObservableListBase<Product> {
 		return bought;
 	}
 
+	public ObservableList<String> getMessagesList() {
+		return messages;
+	}
+
 	public void placeOrder(Optional<Pair<String, String>> login) {
 		if(client == null){
 			client = new Client();
@@ -125,10 +147,14 @@ public class ModelShop extends ModifiableObservableListBase<Product> {
 		if(login.isPresent()){
 			Pair<Pair<String, String>, Order> preparedOrder = new Pair<>(login.get(), order);
 			client.placeOrder(preparedOrder);
-			order = null;
+			orderReset = true;
 		}
 		else
 			System.out.println("Abgebrochen");
+	}
+
+	public void sendMessage(String message) {
+		chatClient.send(message);
 	}
 
 }

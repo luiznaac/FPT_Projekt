@@ -1,12 +1,9 @@
-package view;
+package model;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.DatagramPacket;
 import java.net.Socket;
-import model.Order;
-import model.Product;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.util.Pair;
