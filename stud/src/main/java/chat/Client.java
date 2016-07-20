@@ -10,20 +10,20 @@ import javafx.collections.ObservableList;
 public class Client {
 
 	private Remote client;
-//	private ObservableList<String> messages;
 	private ChatService server;
+	private String name;
 
 	public Client(String name, ObservableList<String> messages) throws RemoteException, MalformedURLException, NotBoundException {
-//		this.messages = messages;
 		client = new ChatClient(name, messages);
-		Naming.rebind("//localhost:1099/"  + name, client);
+		this.name = name;
+		Naming.rebind("//localhost:1099/benutzername/"  + name, client);
 		server = (ChatService)Naming.lookup("server");
 		server.login(name);
 	}
 
 	public void send(String message) {
 		try {
-			server.send(message);
+			server.send(name + ": " + message);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

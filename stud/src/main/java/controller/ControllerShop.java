@@ -44,6 +44,12 @@ public class ControllerShop {
 
 					case "send":
 						model.sendMessage(view.getInputChat());
+						break;
+						
+					case "login":
+						model.login(view.getLogin());
+						break;
+						
 				}
 			}
 		});

@@ -33,7 +33,7 @@ public class ChatServer extends UnicastRemoteObject implements ChatService {
 		System.out.println(message);
 		for(String user : users){
 			try {
-				((ClientService)Naming.lookup(user)).send(message);
+				((ClientService)Naming.lookup("benutzername/" + user)).send(message);
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			} catch (NotBoundException e) {

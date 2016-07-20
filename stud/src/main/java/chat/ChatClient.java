@@ -22,7 +22,7 @@ public class ChatClient extends UnicastRemoteObject implements ClientService {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				messages.add(name + ": " + message);
+				messages.add(message);
 			}
 		});
 	}

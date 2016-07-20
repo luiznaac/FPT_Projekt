@@ -30,6 +30,8 @@ public class ViewShop extends BorderPane {
 	private ListView<String> messages = new ListView<>();
 	private TextField message = new TextField();
 	private Button sendButton = new Button("Send");
+	private TextField login = new TextField();
+	private Button loginButton = new Button("Login");
 
 	public ViewShop() {
 		//set the input area
@@ -73,7 +75,9 @@ public class ViewShop extends BorderPane {
 		sendButton.setId("send");
 		sendButton.setDefaultButton(true);
 		HBox chatHbox = new HBox(message, sendButton);
-		VBox chatVbox = new VBox(messages, chatHbox);
+		loginButton.setId("login");
+		HBox loginHbox = new HBox(login, loginButton);
+		VBox chatVbox = new VBox(loginHbox, messages, chatHbox);
 		//set the BorderPane's children
 		setLeft(products);
 		setCenter(inputVbox);
@@ -87,6 +91,7 @@ public class ViewShop extends BorderPane {
 		loadButton.addEventHandler(ActionEvent.ACTION, eventHandler);
 		saveButton.addEventHandler(ActionEvent.ACTION, eventHandler);
 		sendButton.addEventHandler(ActionEvent.ACTION, eventHandler);
+		loginButton.addEventHandler(ActionEvent.ACTION, eventHandler);
 	}
 
 	public ChoiceBox<String> getChoiceBox() {
@@ -115,5 +120,9 @@ public class ViewShop extends BorderPane {
 
 	public String getInputChat() {
 		return message.getText();
+	}
+
+	public String getLogin() {
+		return login.getText();
 	}
 }

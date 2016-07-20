@@ -28,15 +28,6 @@ public class ModelShop extends ModifiableObservableListBase<Product> {
 		client = null;
 		orderReset = false;
 		messages = FXCollections.observableArrayList(new ArrayList<String>());
-		try {
-			chatClient = new chat.Client("BENUTZERNAME", messages);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override
@@ -153,8 +144,32 @@ public class ModelShop extends ModifiableObservableListBase<Product> {
 			System.out.println("Abgebrochen");
 	}
 
+	public void login(String username){
+		if(chatClient != null)
+			System.out.println("Already logged in");
+		else {
+			if(username.equals(""))
+				System.out.println("Invalid username");
+			else {
+				try {
+					chatClient = new chat.Client(username, messages);
+					System.out.println(username + " logged in");
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
 	public void sendMessage(String message) {
-		chatClient.send(message);
+		if(chatClient == null)
+			System.out.println("Please login");
+		else
+			chatClient.send(message);
 	}
 
 }
